@@ -7,13 +7,13 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import classification_report
 
 # Load the datasets
-df_train = pd.read_csv('C:/Users/vigneshwaran k/Downloads/CodSoft-main/CodSoft-main/GenereClassification/data/train_data.txt',
+df_train = pd.read_csv('C:/Users/Sanjay g/Downloads/CodSoft-main/CodSoft-main/GenereClassification/data/train_data.txt',
                        sep=':::', engine='python',
                        names=['No.', 'MovieName', 'Genere', 'Description'])
-df_test = pd.read_csv('C:/Users/vigneshwaran k/Downloads/CodSoft-main/CodSoft-main/GenereClassification/data/test_data.txt',
+df_test = pd.read_csv('C:/Users/Sanjay g/Downloads/CodSoft-main/CodSoft-main/GenereClassification/data/test_data.txt',
                       sep=':::', engine='python',
                       names=['No.', 'MovieName', 'Description'])
-df_soln = pd.read_csv('C:/Users/vigneshwaran k/Downloads/CodSoft-main/CodSoft-main/GenereClassification/data/test_data_solution.txt',
+df_soln = pd.read_csv('C:/Users/Sanjay g/Downloads/CodSoft-main/CodSoft-main/GenereClassification/data/test_data_solution.txt',
                        sep=':::', engine='python',
                        names=['No.', 'MovieName', 'Genere', 'Description'])
 
@@ -39,3 +39,4 @@ y_pred = model.predict(X_test_tfidf)
 # Evaluation
 print(classification_report(df_soln['Genere'], y_pred))
 df_test['Predicted_Genre'] = y_pred
+
