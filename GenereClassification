@@ -1,0 +1,41 @@
+# Importing data libraries
+import pandas as pd
+import numpy as np
+# Importing machine learning libraries
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import classification_report
+
+# Load the datasets
+df_train = pd.read_csv('C:/Users/vigneshwaran k/Downloads/CodSoft-main/CodSoft-main/GenereClassification/data/train_data.txt',
+                       sep=':::', engine='python',
+                       names=['No.', 'MovieName', 'Genere', 'Description'])
+df_test = pd.read_csv('C:/Users/vigneshwaran k/Downloads/CodSoft-main/CodSoft-main/GenereClassification/data/test_data.txt',
+                      sep=':::', engine='python',
+                      names=['No.', 'MovieName', 'Description'])
+df_soln = pd.read_csv('C:/Users/vigneshwaran k/Downloads/CodSoft-main/CodSoft-main/GenereClassification/data/test_data_solution.txt',
+                       sep=':::', engine='python',
+                       names=['No.', 'MovieName', 'Genere', 'Description'])
+
+# Preprocessing the data
+
+X_train_text = df_train['MovieName'] + " " + df_train['Description']
+y_train = df_train['Genere']
+
+X_test_text = df_test['MovieName'] + " " + df_test['Description']
+
+# TF-IDF vectorization
+vectorizer = TfidfVectorizer(stop_words='english', max_features=9000)
+X_train_tfidf = vectorizer.fit_transform(X_train_text)
+X_test_tfidf = vectorizer.transform(X_test_text)  # Use transform, not fit_transform
+
+# Model training
+model = LogisticRegression(max_iter=200)
+model.fit(X_train_tfidf, y_train)
+
+# Prediction
+y_pred = model.predict(X_test_tfidf)
+
+# Evaluation
+print(classification_report(df_soln['Genere'], y_pred))
+df_test['Predicted_Genre'] = y_pred
